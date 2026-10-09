@@ -1,4 +1,3 @@
-import { AppShell } from "@/components/layout/app-shell";
 import { ArrowRight, ScanText, WandSparkles } from "lucide-react";
 
 const features = [
@@ -18,7 +17,6 @@ const features = [
 
 export default function HomePage() {
   return (
-    <AppShell>
       <div className="space-y-8">
         <div>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
@@ -71,6 +69,6 @@ export default function HomePage() {
           </p>
         </div>
       </div>
-    </AppShell>
+   
   );
 }
