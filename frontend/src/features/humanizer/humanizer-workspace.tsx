@@ -11,6 +11,11 @@ import { TextEditor } from "@/components/editor/text-editor";
 import { HumanizerSettings } from "./components/humanizer-settings";
 import type { HumanizerSettings as Settings } from "./types";
 
+import {
+  MAX_INPUT_WORDS,
+  countWords,
+} from "@/lib/text";
+
 const defaultSettings: Settings = {
   model: "gemini",
   tone: "natural",
@@ -24,6 +29,10 @@ export function HumanizerWorkspace() {
     useState<Settings>(defaultSettings);
 
   const hasInput = inputText.trim().length > 0;
+
+    const inputWordCount = countWords(inputText);
+    const exceedsWordLimit = inputWordCount > MAX_INPUT_WORDS;
+    const canHumanize = hasInput && !exceedsWordLimit;
 
   function handleClear() {
     setInputText("");
@@ -67,10 +76,14 @@ export function HumanizerWorkspace() {
 
       <div className="grid gap-5 xl:grid-cols-2">
         <TextEditor
-          label="Original Text"
-          value={inputText}
-          onChange={setInputText}
-          placeholder="Paste or write your English text here..."
+            label="Original Text"
+            value={inputText}
+            onChange={(value) => {
+                setInputText(value);
+                setOutputText("");
+            }}
+            placeholder="Paste or write your English text here..."
+            maxWords={MAX_INPUT_WORDS}
         />
 
         <TextEditor
